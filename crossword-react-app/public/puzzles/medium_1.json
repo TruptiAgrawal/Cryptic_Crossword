@@ -1,0 +1,26 @@
+{
+    "size": 5,
+    "gridSpec": [
+        { "x": 0, "y": 0, "number": 1 }, { "x": 0, "y": 1 }, { "x": 0, "y": 2 }, { "x": 0, "y": 3 }, { "x": 0, "y": 4 },
+        { "x": 1, "y": 0, "number": 2 }, { "x": 1, "y": 1 }, { "x": 1, "y": 2 }, { "x": 1, "y": 3 }, { "x": 1, "y": 4 },
+        { "x": 2, "y": 0, "number": 3 }, { "x": 2, "y": 1 }, { "x": 2, "y": 2 }, { "x": 2, "y": 3 }, { "x": 2, "y": 4 },
+        { "x": 3, "y": 0, "number": 4 }, { "x": 3, "y": 1 }, { "x": 3, "y": 2 }, { "x": 3, "y": 3 }, { "x": 3, "y": 4 },
+        { "x": 4, "y": 0, "number": 5 }, { "x": 4, "y": 1 }, { "x": 4, "y": 2 }, { "x": 4, "y": 3 }, { "x": 4, "y": 4 }
+    ],
+    "clues": {
+        "across": [
+            { "number": 1, "text": "Pains or sorrows", "answer": "ACHES", "x": 0, "y": 0, "len": 5 },
+            { "number": 2, "text": "A spice from a flower bud", "answer": "CLOVE", "x": 1, "y": 0, "len": 5 },
+            { "number": 3, "text": "A place to live", "answer": "HOUSE", "x": 2, "y": 0, "len": 5 },
+            { "number": 4, "text": "An occurrence or happening", "answer": "EVENT", "x": 3, "y": 0, "len": 5 },
+            { "number": 5, "text": "Small things that grow into plants", "answer": "SEEDS", "x": 4, "y": 0, "len": 5 }
+        ],
+        "down": [
+            { "number": 1, "text": "Body pains", "answer": "ACHES", "x": 0, "y": 0, "len": 5 },
+            { "number": 2, "text": "Garlic unit", "answer": "CLOVE", "x": 0, "y": 1, "len": 5 },
+            { "number": 3, "text": "Building for dwelling in", "answer": "HOUSE", "x": 0, "y": 2, "len": 5 },
+            { "number": 4, "text": "A planned occasion", "answer": "EVENT", "x": 0, "y": 3, "len": 5 },
+            { "number": 5, "text": "Plants them to grow", "answer": "SEEDS", "x": 0, "y": 4, "len": 5 }
+        ]
+    }
+}

@@ -1,0 +1,14 @@
+[
+    {
+        "id": "easy_1",
+        "title": "A Quick Start",
+        "difficulty": "Easy",
+        "file": "puzzles/easy_1.json"
+    },
+    {
+        "id": "medium_1",
+        "title": "A Bit Trickier",
+        "difficulty": "Medium",
+        "file": "puzzles/medium_1.json"
+    }
+]

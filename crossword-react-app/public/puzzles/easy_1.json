@@ -1,0 +1,26 @@
+{
+    "size": 5,
+    "gridSpec": [
+        { "x": 0, "y": 0, "number": 1 }, { "x": 0, "y": 1 }, { "x": 0, "y": 2 }, { "x": 0, "y": 3 }, { "x": 0, "y": 4 },
+        { "x": 1, "y": 0, "number": 2 }, { "x": 1, "y": 1 }, { "x": 1, "y": 2 }, { "x": 1, "y": 3 }, { "x": 1, "y": 4 },
+        { "x": 2, "y": 0, "number": 3 }, { "x": 2, "y": 1 }, { "x": 2, "y": 2 }, { "x": 2, "y": 3 }, { "x": 2, "y": 4 },
+        { "x": 3, "y": 0, "number": 4 }, { "x": 3, "y": 1 }, { "x": 3, "y": 2 }, { "x": 3, "y": 3 }, { "x": 3, "y": 4 },
+        { "x": 4, "y": 0, "number": 5 }, { "x": 4, "y": 1 }, { "x": 4, "y": 2 }, { "x": 4, "y": 3 }, { "x": 4, "y": 4 }
+    ],
+    "clues": {
+        "across": [
+            { "number": 1, "text": "A large bird or a lifting machine", "answer": "CRANE", "x": 0, "y": 0, "len": 5 },
+            { "number": 2, "text": "A cowboy competition", "answer": "RODEO", "x": 1, "y": 0, "len": 5 },
+            { "number": 3, "text": "A type of clay or a software company", "answer": "ADOBE", "x": 2, "y": 0, "len": 5 },
+            { "number": 4, "text": "Requires or wants", "answer": "NEEDS", "x": 3, "y": 0, "len": 5 },
+            { "number": 5, "text": "A red fluorescent dye", "answer": "EOSIN", "x": 4, "y": 0, "len": 5 }
+        ],
+        "down": [
+            { "number": 1, "text": "To stretch one's neck to see", "answer": "CRANE", "x": 0, "y": 0, "len": 5 },
+            { "number": 2, "text": "Famous drive in Beverly Hills", "answer": "RODEO", "x": 0, "y": 1, "len": 5 },
+            { "number": 3, "text": "Sun-dried brick", "answer": "ADOBE", "x": 0, "y": 2, "len": 5 },
+            { "number": 4, "text": "Necessities of life", "answer": "NEEDS", "x": 0, "y": 3, "len": 5 },
+            { "number": 5, "text": "A histological stain", "answer": "EOSIN", "x": 0, "y": 4, "len": 5 }
+        ]
+    }
+}
