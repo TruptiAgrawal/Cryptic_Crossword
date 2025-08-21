@@ -188,7 +188,7 @@ Here’s a detailed breakdown of how the existing vanilla JavaScript concepts wo
                   isActive={activeCellIndex === index}
                   onFocus={onCellFocus}
                   onChange={onCellChange}
-                  onKeyDown={onCellKeyDown}
+                  onKeyDown={(e) => onKeyDown(index, e)}
                   value={userAnswers[index] || ''}
                   validation={validationState[index]}
                   // ... other props for highlighting
@@ -217,7 +217,7 @@ Here’s a detailed breakdown of how the existing vanilla JavaScript concepts wo
                   maxLength="1"
                   value={displayValue}
                   onFocus={() => onFocus(index)}
-                  onChange={(e) => onChange(index, e.target.value)}
+                  onChange={(e) => onChange(index, e)}
                   onKeyDown={(e) => onKeyDown(index, e)}
                   // Ref for programmatic focus if needed
                 />
@@ -335,3 +335,61 @@ Here’s a detailed breakdown of how the existing vanilla JavaScript concepts wo
 *   **Ecosystem:** Access to a vast ecosystem of libraries, tools, and a large community for support.
 
 This detailed plan should give you a solid foundation for migrating your Cryptic Crossword game to React. Would you like me to proceed with outlining or creating the initial React project structure and some of these components?
+
+improvements to look for:
+
+#### 1. Advanced State Management for `CrosswordGame`
+
+*   **`useReducer` for Complex Game State:** For the `CrosswordGame` component, which manages interconnected state (active cell, direction, user answers, validation, clue mappings), consider using `useReducer` instead of multiple `useState` calls. This centralizes state logic, makes state transitions more predictable, and can simplify debugging. A reducer can handle actions like `TYPE_LETTER`, `MOVE_CELL`, `TOGGLE_DIRECTION`, `CHECK_PUZZLE`, each updating relevant parts of the game state.
+
+#### 2. Performance Optimizations
+
+*   **`React.memo` for `Cell` and `Clues`:** Wrap components like `Cell` and `Clues` in `React.memo` to prevent unnecessary re-renders if their props haven't changed.
+    ```jsx
+    // components/Cell.js
+    import React from 'react';
+    // ...
+    export default React.memo(Cell);
+
+    // components/Clues.js
+    import React from 'react';
+    // ...
+    export default React.memo(Clues);
+    ```
+*   **`useCallback` for Event Handlers:** Use `useCallback` in parent components (e.g., `CrosswordGame` or `Grid`) to memoize functions passed as props (e.g., `onCellFocus`, `onCellChange`, `onClueClick`). This prevents them from being re-created on every render, which helps `React.memo` work effectively on child components.
+
+#### 3. Enhanced Accessibility (A11y)
+
+*   **Detailed Keyboard Navigation:** Elaborate on the `onKeyDown` logic for `Cell.js` or `Grid.js`. This is crucial for a crossword game. Implement arrow key navigation, `Backspace` to delete and move back, and `Enter`/`Space` to toggle input direction. Ensure proper `tabIndex` management.
+*   **More ARIA Attributes:** Beyond `role="gridcell"` and `aria-label`, consider `aria-current="true"` for the active clue, `aria-live` regions for announcements, and `aria-describedby` to link cells to clues.
+*   **Focus Management with `useRef`:** Use `useRef` to programmatically manage focus, especially when moving between cells or when a clue is clicked, ensuring the correct input field receives focus.
+
+#### 4. Explicit Data Processing Logic
+
+*   **`generateSolution()` and `buildClueMappings()`:** Provide a more detailed outline or pseudocode for these crucial utility functions. Explain how the flat `solution` array will be derived from `puzzleData.gridSpec` and the correct answers, and how `cellClueMapping` and `clueCellMapping` will be generated for highlighting and navigation.
+
+#### 5. Styling Approaches
+
+*   Expand on common React styling practices beyond CSS variables:
+    *   **CSS Modules:** For scoping CSS to components.
+    *   **Styled Components / Emotion:** For CSS-in-JS solutions.
+    *   **Tailwind CSS:** A utility-first CSS framework.
+    *   Discuss the pros and cons of each for this project.
+
+#### 6. Testing Strategy
+
+*   Outline a testing strategy:
+    *   **Unit Tests:** Using Jest and React Testing Library for individual components.
+    *   **Integration Tests:** For `CrosswordGame` to test interactions.
+    *   **End-to-End Tests:** Using tools like Cypress for full user flows.
+
+#### 7. Project Setup
+
+*   Mention using **Create React App (CRA)** or **Vite** for quickly scaffolding the React project, as they handle build configurations out of the box.
+
+#### 8. User Experience (UX) Enhancements
+
+*   **Visual Feedback for Active Clues/Words:** Highlight not just the active cell but also the corresponding clue and all other cells belonging to that clue.
+*   **Timer:** Implement a simple timer to track game duration.
+*   **Hints:** Consider adding a "hint" mechanism.
+*   **Save/Load Game:** Allow users to save and load their progress (e.g., using `localStorage`).
