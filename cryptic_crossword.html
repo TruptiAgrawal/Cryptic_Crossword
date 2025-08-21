@@ -24,17 +24,19 @@
         }
         #grid-container {
             display: grid;
-            grid-template-columns: repeat(5, 40px);
-            grid-template-rows: repeat(5, 40px);
-            border: 2px solid #333;
+            grid-template-columns: repeat(5, 50px);
+            grid-template-rows: repeat(5, 50px);
+            border: 3px solid #333;
             margin-bottom: 20px;
+            background-color: #333;
+            gap: 1px;
         }
         .grid-cell {
-            width: 40px;
-            height: 40px;
-            border: 1px solid #ccc;
+            width: 50px;
+            height: 50px;
+            background-color: #fff;
             text-align: center;
-            font-size: 24px;
+            font-size: 28px;
             position: relative;
         }
         .grid-cell input {
@@ -42,28 +44,32 @@
             height: 100%;
             border: none;
             text-align: center;
-            font-size: 22px;
+            font-size: 26px;
             text-transform: uppercase;
-            background-color: #fff;
+            background-color: transparent;
             padding: 0;
             margin: 0;
+            box-sizing: border-box;
         }
         .grid-cell input:focus {
-            outline: 2px solid #007bff;
+            outline: none;
+            background-color: #e8f0fe;
         }
         .grid-cell.black {
             background-color: #333;
         }
         .grid-cell .number {
             position: absolute;
-            top: 1px;
-            left: 2px;
-            font-size: 10px;
+            top: 2px;
+            left: 3px;
+            font-size: 12px;
+            font-weight: bold;
             color: #555;
         }
         #clues-container {
             display: flex;
             gap: 30px;
+            max-width: 500px;
         }
         .clue-list {
             border: 1px solid #ddd;
@@ -84,6 +90,15 @@
         .clue-list li {
             margin-bottom: 8px;
             font-size: 14px;
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 4px;
+        }
+        .clue-list li.active {
+            background-color: #d0eaff;
+        }
+        .grid-cell.highlighted input {
+            background-color: #d0eaff;
         }
         #check-button {
             padding: 10px 20px;
@@ -96,10 +111,12 @@
             margin-top: 20px;
         }
         .correct {
-            background-color: #d4edda !important; /* Light green */
+            background-color: #d4edda !important;
+            color: #155724;
         }
         .incorrect {
-            background-color: #f8d7da !important; /* Light red */
+            background-color: #f8d7da !important;
+            color: #721c24;
         }
     </style>
 </head>
@@ -126,43 +143,75 @@
             const puzzleData = {
                 size: 5,
                 gridSpec: [
-                    { x: 0, y: 0, number: 1 }, { x: 0, y: 1 }, { x: 0, y: 2 }, { x: 0, y: 3 }, { x: 0, y: 4, number: 2 },
-                    { x: 1, y: 0, number: 3 }, { x: 1, y: 1, black: true }, { x: 1, y: 2, number: 4 }, { x: 1, y: 3, black: true }, { x: 1, y: 4 },
-                    { x: 2, y: 0 }, { x: 2, y: 1, black: true }, { x: 2, y: 2 }, { x: 2, y: 3, black: true }, { x: 2, y: 4 },
-                    { x: 3, y: 0 }, { x: 3, y: 1, black: true }, { x: 3, y: 2 }, { x: 3, y: 3, black: true }, { x: 3, y: 4 },
+                    { x: 0, y: 0, number: 1 }, { x: 0, y: 1 }, { x: 0, y: 2 }, { x: 0, y: 3 }, { x: 0, y: 4 },
+                    { x: 1, y: 0, number: 2 }, { x: 1, y: 1 }, { x: 1, y: 2 }, { x: 1, y: 3 }, { x: 1, y: 4 },
+                    { x: 2, y: 0, number: 3 }, { x: 2, y: 1 }, { x: 2, y: 2 }, { x: 2, y: 3 }, { x: 2, y: 4 },
+                    { x: 3, y: 0, number: 4 }, { x: 3, y: 1 }, { x: 3, y: 2 }, { x: 3, y: 3 }, { x: 3, y: 4 },
                     { x: 4, y: 0, number: 5 }, { x: 4, y: 1 }, { x: 4, y: 2 }, { x: 4, y: 3 }, { x: 4, y: 4 }
                 ],
                 clues: {
                     across: [
-                        { number: 1, text: "Biblical prophet", answer: "HOSEA", x: 0, y: 0, len: 5 },
-                        { number: 5, text: "A leavening agent", answer: "YEAST", x: 4, y: 0, len: 5 }
+                        { number: 1, text: "To concur", answer: "AGREE", x: 0, y: 0, len: 5 },
+                        { number: 2, text: "A school mark", answer: "GRADE", x: 1, y: 0, len: 5 },
+                        { number: 3, text: "To evaluate", answer: "RATES", x: 2, y: 0, len: 5 },
+                        { number: 4, text: "Gardens of paradise", answer: "EDENS", x: 3, y: 0, len: 5 },
+                        { number: 5, text: "A short written piece", answer: "ESSAY", x: 4, y: 0, len: 5 }
                     ],
                     down: [
-                        { number: 1, text: "A favorite pastime", answer: "HOBBY", x: 0, y: 0, len: 5 },
-                        { number: 2, text: "A woodwind instrument", answer: "OBOE", x: 0, y: 4, len: 4 },
-                        { number: 3, text: "To close tightly", answer: "SEAL", x: 1, y: 0, len: 4 },
-                        { number: 4, text: "The direction of sunrise", answer: "EAST", x: 1, y: 2, len: 4 }
+                        { number: 1, text: "To climb upon", answer: "AGREE", x: 0, y: 0, len: 5, ref: '1A' },
+                        { number: 2, text: "A type of slope", answer: "GRADE", x: 0, y: 1, len: 5, ref: '2A' },
+                        { number: 3, text: "Valuations", answer: "RATES", x: 0, y: 2, len: 5, ref: '3A' },
+                        { number: 4, text: "Biblical gardens", answer: "EDENS", x: 0, y: 3, len: 5, ref: '4A' },
+                        { number: 5, text: "To try or test", answer: "ESSAY", x: 0, y: 4, len: 5, ref: '5A' }
                     ]
-                },
-                solution: [
-                    'H', 'O', 'S', 'E', 'A',
-                    'O', '', 'E', '', 'B',
-                    'B', '', 'A', '', 'E',
-                    'B', '', 'S', '', 'L',
-                    'Y', 'E', 'A', 'S', 'T'
-                ]
+                }
             };
+            
+            // Auto-generate solution from answers to ensure consistency
+            puzzleData.solution = Array(puzzleData.size * puzzleData.size).fill('');
+            puzzleData.clues.across.forEach(clue => {
+                for (let i = 0; i < clue.len; i++) {
+                    const index = (clue.x * puzzleData.size) + (clue.y + i);
+                    puzzleData.solution[index] = clue.answer[i];
+                }
+            });
 
             const gridContainer = document.getElementById('grid-container');
-            const acrossClues = document.getElementById('across-clues');
-            const downClues = document.getElementById('down-clues');
+            const acrossCluesList = document.getElementById('across-clues');
+            const downCluesList = document.getElementById('down-clues');
             const checkButton = document.getElementById('check-button');
+            const gridCells = [];
+
+            const cellClueMapping = {}; // { cellIndex: { across: clue, down: clue } }
+            const clueCellMapping = { across: {}, down: {} }; // { across: { clueNum: [cellIndex] } }
+
+            puzzleData.clues.across.forEach(clue => {
+                const cells = [];
+                for (let i = 0; i < clue.len; i++) {
+                    const index = (clue.x * puzzleData.size) + clue.y + i;
+                    if (!cellClueMapping[index]) cellClueMapping[index] = {};
+                    cellClueMapping[index].across = clue;
+                    cells.push(index);
+                }
+                clueCellMapping.across[clue.number] = cells;
+            });
+            puzzleData.clues.down.forEach(clue => {
+                const cells = [];
+                for (let i = 0; i < clue.len; i++) {
+                    const index = (clue.x + i) * puzzleData.size + clue.y;
+                    if (!cellClueMapping[index]) cellClueMapping[index] = {};
+                    cellClueMapping[index].down = clue;
+                    cells.push(index);
+                }
+                clueCellMapping.down[clue.number] = cells;
+            });
 
             // Render Grid
             puzzleData.gridSpec.forEach((cellSpec, index) => {
                 const cell = document.createElement('div');
                 cell.classList.add('grid-cell');
                 cell.dataset.index = index;
+                gridCells.push(cell);
 
                 if (cellSpec.black) {
                     cell.classList.add('black');
@@ -170,6 +219,7 @@
                     const input = document.createElement('input');
                     input.type = 'text';
                     input.maxLength = 1;
+                    input.dataset.index = index;
                     cell.appendChild(input);
                     if (cellSpec.number) {
                         const numberSpan = document.createElement('span');
@@ -182,15 +232,84 @@
             });
 
             // Render Clues
-            puzzleData.clues.across.forEach(clue => {
-                const li = document.createElement('li');
-                li.textContent = `${clue.number}. ${clue.text}`;
-                acrossClues.appendChild(li);
+            const renderClues = (clues, listElement, dir) => {
+                clues.forEach(clue => {
+                    const li = document.createElement('li');
+                    li.textContent = `${clue.number}. ${clue.text}`;
+                    li.dataset.clue = `${dir}${clue.number}`;
+                    li.addEventListener('click', () => {
+                        highlightClue(clue, dir);
+                        const firstCellIndex = (dir === 'across') 
+                            ? (clue.x * puzzleData.size) + clue.y 
+                            : (clue.x * puzzleData.size) + clue.y;
+                        gridContainer.querySelector(`input[data-index='${firstCellIndex}']`).focus();
+                    });
+                    listElement.appendChild(li);
+                });
+            };
+            renderClues(puzzleData.clues.across, acrossCluesList, 'across');
+            renderClues(puzzleData.clues.down, downCluesList, 'down');
+
+            function highlightClue(clue, dir) {
+                // Clear all highlights
+                document.querySelectorAll('.grid-cell.highlighted').forEach(c => c.classList.remove('highlighted'));
+                document.querySelectorAll('.clue-list li.active').forEach(c => c.classList.remove('active'));
+
+                if (!clue) return;
+
+                const clueId = `${dir}${clue.number}`;
+                const cellsToHighlight = (dir === 'across') ? clueCellMapping.across[clue.number] : clueCellMapping.down[clue.number];
+                
+                cellsToHighlight.forEach(cellIndex => {
+                    gridCells[cellIndex].classList.add('highlighted');
+                });
+
+                const clueLi = document.querySelector(`li[data-clue='${clueId}']`);
+                if (clueLi) clueLi.classList.add('active');
+            }
+            
+            function highlightCurrentClues(cellIndex) {
+                 document.querySelectorAll('.clue-list li.active').forEach(c => c.classList.remove('active'));
+                 const clues = cellClueMapping[cellIndex];
+                 if(clues) {
+                     if(clues.across) {
+                         document.querySelector(`li[data-clue='across${clues.across.number}']`)?.classList.add('active');
+                     }
+                     if(clues.down) {
+                         document.querySelector(`li[data-clue='down${clues.down.number}']`)?.classList.add('active');
+                     }
+                 }
+            }
+
+            // Event Listeners for Grid
+            gridContainer.addEventListener('keyup', (e) => {
+                const input = e.target.closest('input');
+                if (!input) return;
+
+                const index = parseInt(input.dataset.index);
+                const { size } = puzzleData;
+
+                if (e.key === 'ArrowRight') {
+                    gridContainer.querySelector(`input[data-index='${Math.min(index + 1, size * size - 1)}']`)?.focus();
+                } else if (e.key === 'ArrowLeft') {
+                    gridContainer.querySelector(`input[data-index='${Math.max(index - 1, 0)}']`)?.focus();
+                } else if (e.key === 'ArrowDown') {
+                    gridContainer.querySelector(`input[data-index='${Math.min(index + size, size * size - 1)}']`)?.focus();
+                } else if (e.key === 'ArrowUp') {
+                    gridContainer.querySelector(`input[data-index='${Math.max(index - size, 0)}']`)?.focus();
+                } else if (e.key === 'Backspace') {
+                    input.value = '';
+                    gridContainer.querySelector(`input[data-index='${Math.max(index - 1, 0)}']`)?.focus();
+                } else if (e.key.length === 1 && e.key.match(/[a-z]/i)) {
+                    gridContainer.querySelector(`input[data-index='${Math.min(index + 1, size * size - 1)}']`)?.focus();
+                }
             });
-            puzzleData.clues.down.forEach(clue => {
-                const li = document.createElement('li');
-                li.textContent = `${clue.number}. ${clue.text}`;
-                downClues.appendChild(li);
+            
+            gridContainer.addEventListener('focusin', (e) => {
+                const input = e.target.closest('input');
+                if (!input) return;
+                const index = parseInt(input.dataset.index);
+                highlightCurrentClues(index);
             });
 
             // Check Button Logic
@@ -198,11 +317,15 @@
                 const inputs = gridContainer.querySelectorAll('input');
                 let allCorrect = true;
                 inputs.forEach(input => {
-                    const cell = input.parentElement;
-                    const index = parseInt(cell.dataset.index);
+                    const index = parseInt(input.dataset.index);
                     const solutionChar = puzzleData.solution[index];
                     
                     input.classList.remove('correct', 'incorrect');
+
+                    if (input.value.trim() === '') {
+                        allCorrect = false;
+                        return;
+                    }
 
                     if (input.value.toUpperCase() === solutionChar) {
                         input.classList.add('correct');
