@@ -1,0 +1,319 @@
+/* General Body and App Container Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Align to top to prevent excessive vertical centering */
+    min-height: 100vh;
+    margin: 0;
+    background-color: #f0f2f5;
+    color: #333;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.app-container {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    max-width: 900px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Level Selection Styles */
+.level-selection-container {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.level-selection-container h1 {
+    color: #2c3e50;
+    margin-bottom: 25px;
+    font-size: 2.2em;
+}
+
+#puzzle-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+}
+
+#puzzle-list button {
+    background-color: #4CAF50; /* Green */
+    color: white;
+    padding: 15px 25px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    min-width: 180px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#puzzle-list button:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+}
+
+#puzzle-list button:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* Game Wrapper and Container Styles */
+.game-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+#game-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+}
+
+/* Grid Styles */
+#grid-container {
+    display: grid;
+    grid-template-columns: repeat(var(--grid-size), 40px); /* Default cell size */
+    grid-template-rows: repeat(var(--grid-size), 40px);
+    border: 2px solid #333;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    background-color: #eee;
+    max-width: fit-content; /* Adjust to grid size */
+}
+
+.grid-cell {
+    width: 40px;
+    height: 40px;
+    border: 1px solid #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    background-color: #fff;
+    box-sizing: border-box;
+}
+
+.grid-cell.black {
+    background-color: #333;
+    border: 1px solid #333;
+}
+
+.grid-cell .number {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    font-size: 0.6em;
+    color: #555;
+    font-weight: bold;
+}
+
+.grid-cell input {
+    width: 90%;
+    height: 90%;
+    text-align: center;
+    font-size: 1.2em;
+    text-transform: uppercase;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    padding: 0;
+    margin: 0;
+}
+
+.grid-cell.active {
+    background-color: #ffe082; /* Light orange for active cell */
+    border-color: #ffb300;
+}
+
+.grid-cell.highlighted {
+    background-color: #fff9c4; /* Lighter yellow for highlighted cells */
+    border-color: #ffeb3b;
+}
+
+.grid-cell.active.highlighted {
+    background-color: #ffe082; /* Keep active color if both active and highlighted */
+    border-color: #ffb300;
+}
+
+.grid-cell.correct {
+    background-color: #e8f5e9; /* Light green for correct */
+    border-color: #4CAF50;
+}
+
+.grid-cell.incorrect {
+    background-color: #ffebee; /* Light red for incorrect */
+    border-color: #f44336;
+}
+
+/* Clues Section Styles */
+#clues-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    max-width: 400px; /* Limit width of clues section */
+}
+
+.clue-list-container {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.clue-list-container h2 {
+    color: #2c3e50;
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.5em;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.clue-list-container ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.clue-list-container li {
+    padding: 8px 0;
+    cursor: pointer;
+    border-bottom: 1px dotted #eee;
+    font-size: 0.95em;
+    line-height: 1.4;
+    transition: background-color 0.2s ease;
+}
+
+.clue-list-container li:last-child {
+    border-bottom: none;
+}
+
+.clue-list-container li:hover {
+    background-color: #f0f0f0;
+}
+
+.clue-list-container li.active {
+    background-color: #fff3e0; /* Light orange for active clue */
+    font-weight: bold;
+    color: #e65100;
+}
+
+/* Check Puzzle Button */
+.game-wrapper button {
+    background-color: #007bff; /* Blue */
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.game-wrapper button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+.game-wrapper button:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* Win Modal Styles */
+.win-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.win-modal-content {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    width: 90%;
+    transform: scale(0.95); /* Slightly smaller initially */
+    animation: modal-appear 0.3s forwards ease-out;
+}
+
+.win-modal-content h2 {
+    color: #28a745; /* Green for success */
+    margin-bottom: 20px;
+    font-size: 2.5em;
+}
+
+.win-modal-content p {
+    font-size: 1.2em;
+    margin-bottom: 30px;
+    line-height: 1.5;
+}
+
+.win-modal-content button {
+    background-color: #007bff;
+    color: white;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.win-modal-content button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+.win-modal-content button:active {
+    transform: translateY(0);
+}
+
+@keyframes modal-appear {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    #game-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #grid-container {
+        margin-bottom: 20px;
+    }
+
+    #clues-container {
+        max-width: 100%;
+    }
+}
