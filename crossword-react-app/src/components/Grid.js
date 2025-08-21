@@ -1,7 +1,7 @@
 import React from 'react';
 import Cell from './Cell';
 
-function Grid({ gridSpec, size, activeCellIndex, onCellFocus, onCellChange, onCellKeyDown, userAnswers, validationState }) {
+function Grid({ gridSpec, size, activeCellIndex, onCellFocus, onCellChange, onCellKeyDown, userAnswers, validationState, highlightedCells }) {
   // Set CSS variable for grid layout (can be done higher up too)
   React.useEffect(() => {
     document.documentElement.style.setProperty('--grid-size', size);
@@ -17,10 +17,10 @@ function Grid({ gridSpec, size, activeCellIndex, onCellFocus, onCellChange, onCe
           isActive={activeCellIndex === index}
           onFocus={onCellFocus}
           onChange={onCellChange}
-          onKeyDown={(e) => onCellKeyDown(index, e)}
+          onKeyDown={onCellKeyDown}
           value={userAnswers[index] || ''}
           validation={validationState[index]}
-          // ... other props for highlighting
+          isHighlighted={highlightedCells.includes(index)}
         />
       ))}
     </div>

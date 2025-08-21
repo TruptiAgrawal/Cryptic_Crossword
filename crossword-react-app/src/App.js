@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PuzzleSelector from './components/PuzzleSelector';
 import CrosswordGame from './components/CrosswordGame';
+import './Crossword.css'; // Import the CSS file
 
 function App() {
   const [selectedPuzzleFile, setSelectedPuzzleFile] = useState(null);
