@@ -17,7 +17,7 @@ function App() {
         <PuzzleDataProvider puzzleFile={selectedPuzzleFile}>
           <GamePlayProvider>
             <TimerProvider>
-              <CrosswordGame />
+              <CrosswordGame onBackToPuzzles={() => setSelectedPuzzleFile(null)} />
             </TimerProvider>
           </GamePlayProvider>
         </PuzzleDataProvider>

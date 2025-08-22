@@ -1,0 +1,199 @@
+@import url('https://fonts.googleapis.com/css2?family=Times+New+Roman:wght@400;700&display=swap');
+
+/* Main newspaper styling */
+.newspaper-app {
+  font-family: 'Times New Roman', serif;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f8f8f6;
+  color: #222222;
+  min-height: 100vh;
+}
+
+.masthead {
+  text-align: center;
+  margin-bottom: 30px;
+  background: white;
+  padding: 20px;
+  border: 2px solid #000000;
+}
+
+.newspaper-title {
+  font-size: 42px;
+  font-weight: bold;
+  margin: 0 0 10px 0;
+  color: #000000;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+  letter-spacing: 2px;
+}
+
+.newspaper-subtitle {
+  font-size: 16px;
+  display: flex;
+  justify-content: space-between;
+  max-width: 500px;
+  margin: 0 auto;
+  font-weight: bold;
+}
+
+.difficulty {
+  color: #666666;
+}
+
+.title-divider {
+  border: none;
+  border-top: 3px solid #000000;
+  margin: 20px auto;
+  width: 80%;
+}
+
+/* Game layout */
+.crossword-container {
+  background: white;
+  border: 3px solid #000000;
+  padding: 25px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #cccccc;
+}
+
+.timer {
+  font-size: 20px;
+  font-weight: bold;
+  background: #f8f8f6;
+  padding: 10px 20px;
+  border: 2px solid #000000;
+  letter-spacing: 1px;
+}
+
+.win-message {
+  font-size: 24px;
+  font-weight: bold;
+  color: #008000;
+  background: #f0fff0;
+  padding: 10px 20px;
+  border: 2px solid #008000;
+  border-radius: 5px;
+}
+
+.game-container {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  gap: 40px;
+  align-items: flex-start;
+}
+
+.controls-wrapper {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+
+/* Responsive design */
+@media (max-width: 1024px) {
+  .game-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .newspaper-app {
+    padding: 15px;
+  }
+  
+  .crossword-container {
+    padding: 20px;
+  }
+  
+  .newspaper-title {
+    font-size: 32px;
+  }
+  
+  .cell {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .cell-letter {
+    font-size: 20px;
+    margin-top: 8px;
+  }
+  
+  .cell-number {
+    font-size: 10px;
+  }
+  
+  .controls-panel {
+    justify-content: center;
+  }
+  
+  .newspaper-btn {
+    min-width: 110px;
+    font-size: 12px;
+    padding: 10px 15px;
+  }
+  
+  .game-header {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+  
+  .clues-list {
+    max-height: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .newspaper-subtitle {
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .cell {
+    width: 35px;
+    height: 35px;
+  }
+  
+  .cell-letter {
+    font-size: 18px;
+    margin-top: 6px;
+  }
+  
+  .controls-panel {
+    padding: 15px;
+  }
+  
+  .newspaper-btn {
+    width: 100%;
+    margin-bottom: 5px;
+  }
+}
+
+/* Print styles */
+@media print {
+  .controls-panel {
+    display: none;
+  }
+  
+  .timer {
+    display: none;
+  }
+  
+  .newspaper-app {
+    background: white;
+  }
+  
+  .crossword-container {
+    border: 2px solid #000000;
+    box-shadow: none;
+  }
+}
