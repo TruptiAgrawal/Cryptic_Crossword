@@ -1,0 +1,147 @@
+🎯 Core Layout (Responsive, Mobile-first)
+
+Header (sticky, 56–64px):
+
+Left: Game title/logo.
+
+Right: Timer + Difficulty dropdown (Easy / Medium / Hard).
+
+Main Content Split
+
+Desktop (≥768px): Two-column layout.
+
+Left: Crossword grid + inline status bar (row/col, clue number, error state).
+
+Right: Clue panel with tabs (Across/Down), search bar, and scrolling list of clues.
+
+Mobile (<768px): Stack vertically (grid first, clues below).
+
+Footer Actions (sticky)
+
+Primary button: Check Puzzle (accent).
+
+Secondary: Check Word.
+
+Tertiary: Hint (x).
+
+Ghost button: Reset.
+
+Always visible → prevents scroll tax.
+
+Empty state UX:
+
+If no cell selected: show message → “Select a cell to start—promise I don’t bite.”
+
+🧠 Information Architecture Upgrades
+
+Single source of truth for selection state → grid, clue, and status bar are always in sync.
+
+Grid <-> Clue deep linking:
+
+Click clue = focus first empty cell + scroll grid.
+
+Click cell = highlight corresponding clue.
+
+Mode toggle: Spacebar/Tab switches Across ↔ Down. Status bar shows current direction.
+
+Difficulty decoupled from grid size:
+
+Easy → generous hints, auto-validation.
+
+Medium → limited hints, word-level check.
+
+Hard → only final validation, vague error nudges.
+
+🎨 Visual Design System
+
+Typography scale:
+
+H1: 28px, H2: 20px, Body: 16px, Small: 14px.
+
+Grid letters → monospace font.
+
+Spacing system: 8pt scale (grid gutter 4–6px, clue list padding 8–12px).
+
+Color tokens (light mode):
+
+--ink: #222
+
+--muted: #6b7280
+
+--bg: #fff
+
+--panel: #f8fafc
+
+--accent: #3b82f6 (selection)
+
+--warn: #ef4444 (error)
+
+--ok: #10b981 (correct)
+
+States:
+
+Selected word → soft accent background.
+
+Current cell → bold border.
+
+Error flash → 300ms subtle animation (not anxiety-inducing).
+
+⌨️ Interaction Model
+
+Keyboard-first controls:
+
+Type letters → auto-advance.
+
+Backspace → delete & reverse.
+
+Arrow keys → move cell.
+
+Spacebar → toggle Across/Down.
+
+Enter → jump to next clue.
+
+Validation modes:
+
+Soft validate on demand (word check).
+
+Hard validate only on “Check Puzzle”.
+
+No constant red spam.
+
+Hints scaling with difficulty:
+
+Easy → unlimited letter reveal.
+
+Medium → limited letter reveal, word check only.
+
+Hard → no reveal, vague “This looks off” hints.
+
+♿ Accessibility (non-negotiable)
+
+ARIA roles:
+
+Grid → role="grid" with row/col counts.
+
+Cells → role="gridcell", with aria-selected, aria-labelledby linking to active clue.
+
+Screen reader UX:
+
+Focused cell announces: “Row 3, Col 5, Across 14, 5 letters, letter 2.”
+
+Contrast ratio ≥ 4.5:1.
+
+Dark mode: honor prefers-color-scheme.
+
+Reduced motion: respect prefers-reduced-motion.
+
+📑 Clue Panel UX
+
+Tabs: Across | Down (with counts, e.g. “Across (10)”).
+
+Filter: Live-search box for clues.
+
+Clue formatting: Show number, clue text, and length (5).
+
+Progress chips:
+
+✅ solved, ✳ partially filled, ○ untouched.
