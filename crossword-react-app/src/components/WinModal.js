@@ -10,11 +10,11 @@ function WinModal() {
   return (
     <div className="win-modal-overlay">
       <div className="win-modal-content">
-        <h2 style={{ fontSize: '3em', color: '#4CAF50', marginBottom: '15px' }}>🎉 Congratulations! 🎉</h2>
-        <p style={{ fontSize: '1.3em', marginBottom: '20px' }}>You've successfully completed the crossword!</p>
+        <h2>Congratulations!</h2>
+        <p>You've successfully completed the crossword!</p>
         {finalTime && <p style={{ fontSize: '1.1em', fontWeight: 'bold' }}>Time: {finalTime}</p>}
         {/* hintsUsed is passed as a prop to WinModal from CrosswordGame, so no need to get it from context here */}
-        <button onClick={handleCloseWinModal} style={{ marginTop: '25px' }}>Play Again</button>
+        <button onClick={handleCloseWinModal}>Play Again</button>
       </div>
     </div>
   );

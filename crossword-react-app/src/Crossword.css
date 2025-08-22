@@ -1,25 +1,26 @@
 /* General Body and App Container Styles */
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Merriweather', 'Times New Roman', serif;
     display: flex;
     justify-content: center;
-    align-items: flex-start; /* Align to top to prevent excessive vertical centering */
+    align-items: flex-start;
     min-height: 100vh;
     margin: 0;
-    background-color: #f0f2f5;
+    background-color: #FDF8F0;
     color: #333;
     padding: 20px;
     box-sizing: border-box;
 }
 
 .app-container {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    padding: 30px;
-    max-width: 900px;
+    background-color: #FFFFFF;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 25px 35px;
+    max-width: 1000px;
     width: 100%;
     box-sizing: border-box;
+    border: 2px solid #333;
 }
 
 /* Level Selection Styles */
@@ -29,39 +30,18 @@ body {
 }
 
 .level-selection-container h1 {
-    color: #2c3e50;
+    color: #222;
     margin-bottom: 25px;
-    font-size: 2.2em;
+    font-size: 3em;
+    font-weight: 700;
+    font-family: 'Playfair Display', Georgia, serif;
 }
 
 #puzzle-list {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 15px;
-}
-
-#puzzle-list button {
-    background-color: #4CAF50; /* Green */
-    color: white;
-    padding: 15px 25px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1.1em;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    min-width: 180px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-#puzzle-list button:hover {
-    background-color: #45a049;
-    transform: translateY(-2px);
-}
-
-#puzzle-list button:active {
-    transform: translateY(0);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    gap: 20px;
 }
 
 /* Game Wrapper and Container Styles */
@@ -69,134 +49,146 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
+    gap: 25px;
+    width: 100%;
 }
 
 #game-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
     width: 100%;
+    max-width: 1200px;
+    align-items: flex-start;
 }
 
 /* Grid Styles */
 #grid-container {
-    --cell-size: 40px; /* Default cell size for larger screens */
+    --cell-size: 45px; /* Default cell size */
     display: grid;
     grid-template-columns: repeat(var(--grid-size), var(--cell-size));
     grid-template-rows: repeat(var(--grid-size), var(--cell-size));
-    border: 2px solid #333;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    background-color: #eee;
-    max-width: fit-content; /* Adjust to grid size */
+    border: 3px solid #000;
+    box-shadow: none;
+    background-color: #FFFFFF;
+    max-width: fit-content;
 }
 
 .grid-cell {
     width: var(--cell-size);
     height: var(--cell-size);
-    border: 1px solid #ccc;
+    border: 1px solid #000;
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
-    background-color: #fff;
+    background-color: #FFFFFF;
     box-sizing: border-box;
+    transition: background-color 0.2s ease-in-out;
 }
 
 .grid-cell.black {
-    background-color: #333;
-    border: 1px solid #333;
+    background-color: #000000;
+    border: 1px solid #000;
 }
 
 .grid-cell .number {
     position: absolute;
-    top: 2px;
+    top: 1px;
     left: 2px;
-    font-size: 0.6em;
-    color: #555;
-    font-weight: bold;
+    font-size: 0.8em;
+    color: #000;
+    font-weight: 600;
+    z-index: 2;
+    font-family: 'Merriweather', 'Times New Roman', serif;
 }
 
 .grid-cell input {
-    width: 90%;
-    height: 90%;
+    width: 100%;
+    height: 100%;
     text-align: center;
-    font-size: 1.2em;
+    font-size: 1.4em;
+    font-weight: 500;
     text-transform: uppercase;
     border: none;
     outline: none;
     background-color: transparent;
     padding: 0;
     margin: 0;
+    box-sizing: border-box;
+    color: #000;
+    font-family: 'Roboto Mono', 'Courier New', monospace;
+}
+
+/* Highlighting based on UI reference */
+.grid-cell.highlighted {
+    background-color: #FDFDE0; /* Light cream/yellow for highlighted word */
 }
 
 .grid-cell.active {
-    background-color: #ffecb3; /* Slightly lighter orange for active cell */
-    border: 3px solid #ffa000; /* Thicker, more distinct border */
-    box-shadow: 0 0 8px rgba(255, 160, 0, 0.6); /* Subtle glow */
-    z-index: 1; /* Bring active cell to front */
+    background-color: #FFFACD; /* Pale yellow for active cell */
+    border: 2px solid #000;
+    z-index: 1;
 }
 
-.grid-cell.highlighted {
-    background-color: #fffde7; /* Very light yellow for highlighted cells */
-    border-color: #ffd700; /* Gold-like border */
-}
-
+/* Ensure active cell in a highlighted word keeps its distinct color */
 .grid-cell.active.highlighted {
-    background-color: #ffecb3; /* Keep active color if both active and highlighted */
-    border: 3px solid #ffa000; /* Keep active border */
-    box-shadow: 0 0 8px rgba(255, 160, 0, 0.6); /* Keep active glow */
+    background-color: #FFFACD;
+    border: 2px solid #000;
 }
 
-.grid-cell.correct {
-    background-color: #e8f5e9; /* Light green for correct */
-    border-color: #4CAF50;
+
+.grid-cell.correct input {
+    color: #2f855a; /* Dark green for correct answers */
 }
 
-.grid-cell.incorrect {
-    background-color: #ffebee; /* Light red for incorrect */
-    border-color: #f44336;
+.grid-cell.incorrect input {
+    color: #c53030; /* Dark red for incorrect answers */
 }
 
 /* Clues Section Styles */
 #clues-container {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 25px;
     width: 100%;
-    max-width: 400px; /* Limit width of clues section */
 }
 
 .clue-list-container {
-    background-color: #f9f9f9;
-    border-radius: 8px;
+    background-color: #FFFFFF;
+    border-radius: 0;
     padding: 20px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    box-shadow: none;
+    border: 1px solid #333;
 }
 
 .clue-list-container h2 {
-    color: #2c3e50;
+    color: #222;
     margin-top: 0;
     margin-bottom: 15px;
-    font-size: 1.5em;
-    border-bottom: 1px solid #eee;
+    font-size: 1.6em;
+    border-bottom: 2px solid #000;
     padding-bottom: 10px;
+    font-family: 'Playfair Display', Georgia, serif;
 }
 
 .clue-list-container ul {
     list-style: none;
     padding: 0;
     margin: 0;
+    max-height: 250px; /* Limit height and allow scrolling */
+    overflow-y: auto;
 }
 
 .clue-list-container li {
-    padding: 8px 0;
+    padding: 8px 5px;
     cursor: pointer;
-    border-bottom: 1px dotted #eee;
+    border-bottom: 1px dashed #CCC;
     font-size: 0.95em;
     line-height: 1.4;
-    transition: background-color 0.2s ease;
+    transition: none;
+    color: #333;
+    font-family: 'Merriweather', 'Times New Roman', serif;
 }
 
 .clue-list-container li:last-child {
@@ -204,39 +196,24 @@ body {
 }
 
 .clue-list-container li:hover {
-    background-color: #f0f0f0;
+    background-color: #F8F8F8;
 }
 
 .clue-list-container li.active {
-    background-color: #ffe0b2; /* More prominent orange for active clue */
-    font-weight: bold;
-    color: #e65100;
-    border-left: 5px solid #ff9800; /* Distinct left border */
-    padding-left: 15px; /* Adjust padding due to border */
+    background-color: #FFFACD;
+    font-weight: 600;
+    color: #222;
+    border-left: 2px solid #000;
+    padding-left: 18px;
 }
 
 /* Check Puzzle Button */
-.game-wrapper button {
-    background-color: #007bff; /* Blue */
-    color: white;
-    padding: 12px 25px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+.game-wrapper .chakra-button {
     font-size: 1.1em;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    margin-top: 20px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-.game-wrapper button:hover {
-    background-color: #0056b3;
-    transform: translateY(-2px);
-}
-
-.game-wrapper button:active {
-    transform: translateY(0);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    font-weight: 600;
+    padding: 22px 30px;
+    border-radius: 0;
+    transition: none;
 }
 
 /* Win Modal Styles */
@@ -246,7 +223,7 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -254,53 +231,54 @@ body {
 }
 
 .win-modal-content {
-    background-color: #fff;
-    padding: 40px;
-    border-radius: 10px;
+    background-color: #FDFDFD;
+    padding: 45px;
+    border-radius: 0;
     text-align: center;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-    max-width: 400px;
+    box-shadow: none;
+    max-width: 450px;
     width: 90%;
-    transform: scale(0.95); /* Slightly smaller initially */
-    animation: modal-appear 0.3s forwards ease-out;
+    transform: scale(1);
+    animation: none;
+    border: 2px solid #333;
 }
 
 .win-modal-content h2 {
-    color: #28a745; /* Green for success */
+    color: #222;
     margin-bottom: 20px;
     font-size: 2.5em;
+    font-family: 'Playfair Display', Georgia, serif;
 }
 
 .win-modal-content p {
-    font-size: 1.2em;
+    font-size: 1.25em;
     margin-bottom: 30px;
-    line-height: 1.5;
+    line-height: 1.6;
+    color: #444;
+    font-family: 'Merriweather', 'Times New Roman', serif;
 }
 
 .win-modal-content button {
-    background-color: #007bff;
-    color: white;
-    padding: 12px 30px;
-    border: none;
-    border-radius: 5px;
+    background-color: #EFEFEF;
+    color: #333;
+    padding: 14px 35px;
+    border: 1px solid #555;
+    border-radius: 0;
     cursor: pointer;
     font-size: 1.1em;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-weight: 600;
+    transition: none;
+    font-family: 'Merriweather', 'Times New Roman', serif;
 }
 
 .win-modal-content button:hover {
-    background-color: #0056b3;
-    transform: translateY(-2px);
-}
-
-.win-modal-content button:active {
-    transform: translateY(0);
+    background-color: #DDD;
 }
 
 @keyframes modal-appear {
     from {
         opacity: 0;
-        transform: scale(0.8);
+        transform: scale(0.85);
     }
     to {
         opacity: 1;
@@ -309,14 +287,14 @@ body {
 }
 
 /* Responsive Adjustments */
-@media (max-width: 768px) {
+@media (max-width: 992px) {
     #game-container {
-        flex-direction: column;
-        align-items: center;
+        grid-template-columns: 1fr;
+        justify-items: center;
     }
 
     #grid-container {
-        margin-bottom: 20px;
+        margin-bottom: 25px;
     }
 
     #clues-container {
@@ -325,13 +303,78 @@ body {
 }
 
 @media (max-width: 768px) {
+    .app-container {
+        padding: 20px;
+    }
     #grid-container {
-        --cell-size: 35px; /* Smaller cells for tablets */
+        --cell-size: 40px;
+    }
+    .clue-list-container ul {
+        max-height: 200px;
     }
 }
 
 @media (max-width: 480px) {
-    #grid-container {
-        --cell-size: 30px; /* Even smaller cells for mobile phones */
+    .app-container {
+        padding: 15px;
     }
+    #grid-container {
+        --cell-size: 32px;
+    }
+    .grid-cell input {
+        font-size: 1.2em;
+    }
+    .clue-list-container h2 {
+        font-size: 1.4em;
+    }
+    .clue-list-container li {
+        font-size: 0.95em;
+    }
+}
+/* Professional Styling */
+.grid-container {
+  display: flex;
+  justify-content: center;
+}
+
+table.crossword-grid {
+  border-collapse: collapse;
+}
+
+.crossword-cell {
+  width: 40px;
+  height: 40px;
+  border: 2px solid black;
+}
+
+.crossword-cell.white {
+  background-color: white;
+  position: relative;
+}
+
+.crossword-cell.black {
+  background-color: black;
+}
+
+.cell-number {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  font-size: 12px;
+}
+
+.clues-container {
+  width: 400px;
+  margin-left: 30px;
+}
+
+.clue-list h3 {
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.clue-list li {
+  margin-bottom: 8px;
+  line-height: 1.4;
 }

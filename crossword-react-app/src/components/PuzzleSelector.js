@@ -35,24 +35,21 @@ function PuzzleSelector({ onSelectPuzzle }) {
           <Box
             key={puzzle.id}
             p={5}
-            shadow="md"
-            borderWidth="1px"
-            borderRadius="lg"
             flex="1"
             minW="200px"
             maxW="280px"
             cursor="pointer"
-            _hover={{ shadow: "lg", transform: "translateY(-2px)" }}
-            transition="all 0.2s ease-in-out"
+            _hover={{ bg: "#EFEFEF", border: "1px solid #333" }}
+            transition="none"
             onClick={() => onSelectPuzzle(puzzle.file)}
           >
             <Flex justify="space-between" align="center" mb={3}>
               <Text fontSize="xl" fontWeight="semibold">{puzzle.title}</Text>
-              <Badge colorScheme={puzzle.difficulty === 'Easy' ? 'green' : puzzle.difficulty === 'Medium' ? 'orange' : 'red'}>
+              <Badge>
                 {puzzle.difficulty}
               </Badge>
             </Flex>
-            <Text fontSize="sm" color="gray.600">{puzzle.description || 'A challenging crossword puzzle.'}</Text>
+            <Text fontSize="sm" color="gray.600">{puzzle.description}</Text>
           </Box>
         ))}
       </Flex>
