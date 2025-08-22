@@ -1,0 +1,4 @@
+what i want :
+- button to go back to start 
+- check puzzle, check word, hint in a same row
+- across and down to be beside i.e grid, across and down would be three columns
