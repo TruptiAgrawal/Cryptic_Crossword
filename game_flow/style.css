@@ -1,0 +1,211 @@
+/* In style.css */
+:root {
+    --cell-size: min(12vw, 60px);
+    --grid-border-width: 2px;
+    --grid-size: 5; /* This will still be set by JS */
+
+    /* New Theme Colors */
+    --background-color: #f4f4f9;
+    --main-text-color: #333;
+    --primary-accent-color: #4a90e2; /* A nice blue for highlights */
+    --secondary-accent-color: #f7f7f7; /* For subtle backgrounds */
+    --grid-background: #3d3d3d;
+    --cell-background: #ffffff;
+    --cell-highlight-color: #e9f2ff;
+    --correct-color: #d4edda;
+    --incorrect-color: #f8d7da;
+    --border-color: #d1d1d1;
+}
+
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background-color: var(--background-color);
+    color: var(--main-text-color);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+    gap: 40px;
+}
+
+#game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1 {
+    font-weight: 300; /* Lighter font weight */
+    font-size: 2.5rem;
+    color: var(--main-text-color);
+}
+
+#grid-container {
+    display: grid;
+    grid-template-columns: repeat(var(--grid-size), 1fr);
+    grid-template-rows: repeat(var(--grid-size), 1fr);
+    width: calc(var(--grid-size) * var(--cell-size));
+    height: calc(var(--grid-size) * var(--cell-size));
+    border: var(--grid-border-width) solid var(--grid-background);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1); /* Add depth */
+    gap: 1px;
+    margin-bottom: 20px;
+    background-color: var(--grid-background);
+}
+
+.grid-cell {
+    background-color: var(--cell-background);
+    text-align: center;
+    font-size: clamp(16px, 4vw, 28px);
+    position: relative;
+}
+
+.grid-cell input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    text-align: center;
+    font-size: clamp(14px, 3.5vw, 26px);
+    text-transform: uppercase;
+    background-color: transparent;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.grid-cell input:focus {
+    outline: none;
+    background-color: var(--cell-highlight-color);
+}
+
+.grid-cell.black {
+    background-color: #333;
+}
+
+.grid-cell .number {
+    position: absolute;
+    top: 2px;
+    left: 3px;
+    font-size: clamp(8px, 2vw, 12px);
+    font-weight: bold;
+    color: #555;
+}
+
+#clues-container {
+    display: flex;
+    gap: 30px;
+    max-width: 500px;
+}
+
+.clue-list {
+    border: 1px solid var(--border-color);
+    background-color: var(--secondary-accent-color);
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    flex: 1;
+}
+
+.clue-list h3 {
+    color: var(--primary-accent-color);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+    margin-top: 0;
+    font-size: 1.25rem;
+}
+
+.clue-list ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.clue-list li {
+    margin-bottom: 8px;
+    font-size: clamp(12px, 2.5vw, 14px);
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+}
+
+.clue-list li.active {
+    background-color: var(--cell-highlight-color);
+    font-weight: bold;
+}
+
+.grid-cell.highlighted input {
+    background-color: var(--cell-highlight-color);
+}
+
+#check-button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 12px 28px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 20px 2px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+#check-button:hover {
+    background-color: #45a049;
+}
+
+.correct {
+    background-color: var(--correct-color) !important;
+    color: #155724;
+}
+
+.incorrect {
+    background-color: var(--incorrect-color) !important;
+    color: #721c24;
+}
+
+/* Media Query for smaller screens */
+@media (max-width: 768px) {
+    body {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        padding: 10px;
+    }
+
+    #clues-container {
+        flex-direction: column;
+        width: 100%;
+        max-width: calc(var(--grid-size) * var(--cell-size)); /* Match grid width */
+        gap: 15px;
+    }
+}
+
+/* Modal Styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 100;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.5);
+}
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+    border-radius: 8px;
+}
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
