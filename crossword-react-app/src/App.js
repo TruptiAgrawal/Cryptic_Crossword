@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import PuzzleSelector from './components/PuzzleSelector';
 import CrosswordGame from './components/CrosswordGame';
+import { PuzzleDataProvider } from './context/PuzzleDataContext';
+import { GamePlayProvider } from './context/GamePlayContext';
+import { TimerProvider } from './context/TimerContext';
 import './Crossword.css'; // Import the CSS file
 
 function App() {
@@ -11,7 +14,13 @@ function App() {
       {!selectedPuzzleFile ? (
         <PuzzleSelector onSelectPuzzle={setSelectedPuzzleFile} />
       ) : (
-        <CrosswordGame puzzleFile={selectedPuzzleFile} />
+        <PuzzleDataProvider puzzleFile={selectedPuzzleFile}>
+          <GamePlayProvider>
+            <TimerProvider>
+              <CrosswordGame />
+            </TimerProvider>
+          </GamePlayProvider>
+        </PuzzleDataProvider>
       )}
     </div>
   );

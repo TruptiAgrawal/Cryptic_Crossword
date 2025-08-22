@@ -1,23 +1,49 @@
-import React from 'react';
+import React, { memo, useContext, useEffect } from 'react';
 import Cell from './Cell';
+import PuzzleDataContext from '../context/PuzzleDataContext';
+import GamePlayContext from '../context/GamePlayContext';
 
-function Grid({ gridSpec, size, activeCellIndex, onCellFocus, onCellChange, onCellKeyDown, userAnswers, validationState, highlightedCells }) {
-  // Set CSS variable for grid layout (can be done higher up too)
-  React.useEffect(() => {
-    document.documentElement.style.setProperty('--grid-size', size);
-  }, [size]);
+function Grid() {
+  const { puzzleData, cellClueMapping, clueCellMapping } = useContext(PuzzleDataContext);
+  const {
+    userAnswers,
+    validationState,
+    activeCellIndex,
+    currentDirection,
+    handleCellFocus,
+    handleCellChange,
+    handleCellKeyDown,
+  } = useContext(GamePlayContext);
+
+  // Highlighted cells
+  const highlightedCells = [];
+  if (puzzleData && cellClueMapping && clueCellMapping) {
+    const activeClueNumber = cellClueMapping[activeCellIndex]?.[currentDirection];
+    if (activeClueNumber) {
+      highlightedCells.push(...clueCellMapping[currentDirection][activeClueNumber]);
+    }
+  }
+
+  // CSS variable for grid size
+  useEffect(() => {
+    if (puzzleData) {
+      document.documentElement.style.setProperty('--grid-size', puzzleData.size);
+    }
+  }, [puzzleData]);
+
+  if (!puzzleData || !puzzleData.gridSpec) return null; // safeguard
 
   return (
     <div id="grid-container">
-      {gridSpec.map((cellSpec, index) => (
+      {puzzleData.gridSpec.map((cellSpec, index) => (
         <Cell
-          key={index} // Or a more stable ID if available
+          key={index}
           cellSpec={cellSpec}
           index={index}
           isActive={activeCellIndex === index}
-          onFocus={onCellFocus}
-          onChange={onCellChange}
-          onKeyDown={onCellKeyDown}
+          onFocus={handleCellFocus}
+          onChange={handleCellChange}
+          onKeyDown={handleCellKeyDown}
           value={userAnswers[index] || ''}
           validation={validationState[index]}
           isHighlighted={highlightedCells.includes(index)}
@@ -26,4 +52,6 @@ function Grid({ gridSpec, size, activeCellIndex, onCellFocus, onCellChange, onCe
     </div>
   );
 }
-export default Grid;
+
+// ✅ make sure this is OUTSIDE of Grid function, at bottom of file
+export default memo(Grid);

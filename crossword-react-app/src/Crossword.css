@@ -82,9 +82,10 @@ body {
 
 /* Grid Styles */
 #grid-container {
+    --cell-size: 40px; /* Default cell size for larger screens */
     display: grid;
-    grid-template-columns: repeat(var(--grid-size), 40px); /* Default cell size */
-    grid-template-rows: repeat(var(--grid-size), 40px);
+    grid-template-columns: repeat(var(--grid-size), var(--cell-size));
+    grid-template-rows: repeat(var(--grid-size), var(--cell-size));
     border: 2px solid #333;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     background-color: #eee;
@@ -92,8 +93,8 @@ body {
 }
 
 .grid-cell {
-    width: 40px;
-    height: 40px;
+    width: var(--cell-size);
+    height: var(--cell-size);
     border: 1px solid #ccc;
     display: flex;
     justify-content: center;
@@ -131,18 +132,21 @@ body {
 }
 
 .grid-cell.active {
-    background-color: #ffe082; /* Light orange for active cell */
-    border-color: #ffb300;
+    background-color: #ffecb3; /* Slightly lighter orange for active cell */
+    border: 3px solid #ffa000; /* Thicker, more distinct border */
+    box-shadow: 0 0 8px rgba(255, 160, 0, 0.6); /* Subtle glow */
+    z-index: 1; /* Bring active cell to front */
 }
 
 .grid-cell.highlighted {
-    background-color: #fff9c4; /* Lighter yellow for highlighted cells */
-    border-color: #ffeb3b;
+    background-color: #fffde7; /* Very light yellow for highlighted cells */
+    border-color: #ffd700; /* Gold-like border */
 }
 
 .grid-cell.active.highlighted {
-    background-color: #ffe082; /* Keep active color if both active and highlighted */
-    border-color: #ffb300;
+    background-color: #ffecb3; /* Keep active color if both active and highlighted */
+    border: 3px solid #ffa000; /* Keep active border */
+    box-shadow: 0 0 8px rgba(255, 160, 0, 0.6); /* Keep active glow */
 }
 
 .grid-cell.correct {
@@ -204,9 +208,11 @@ body {
 }
 
 .clue-list-container li.active {
-    background-color: #fff3e0; /* Light orange for active clue */
+    background-color: #ffe0b2; /* More prominent orange for active clue */
     font-weight: bold;
     color: #e65100;
+    border-left: 5px solid #ff9800; /* Distinct left border */
+    padding-left: 15px; /* Adjust padding due to border */
 }
 
 /* Check Puzzle Button */
@@ -315,5 +321,17 @@ body {
 
     #clues-container {
         max-width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    #grid-container {
+        --cell-size: 35px; /* Smaller cells for tablets */
+    }
+}
+
+@media (max-width: 480px) {
+    #grid-container {
+        --cell-size: 30px; /* Even smaller cells for mobile phones */
     }
 }

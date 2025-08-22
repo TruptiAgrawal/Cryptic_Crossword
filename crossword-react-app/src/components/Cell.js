@@ -1,8 +1,15 @@
-import React from 'react';
+import React, { memo, useRef, useEffect } from 'react';
 
 function Cell({ cellSpec, index, isActive, onFocus, onChange, onKeyDown, value, validation, isHighlighted }) {
   const isBlack = cellSpec.black;
   const displayValue = (typeof value === 'string' && value) ? value.toUpperCase() : '';
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    if (isActive && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [isActive]);
 
   const cellClassName = `grid-cell ${isBlack ? 'black' : ''} ${isActive ? 'active' : ''} ${validation || ''} ${isHighlighted ? 'highlighted' : ''}`;
 
@@ -15,19 +22,17 @@ function Cell({ cellSpec, index, isActive, onFocus, onChange, onKeyDown, value, 
           maxLength="1"
           value={displayValue}
           onFocus={() => onFocus(index)}
-          onChange={(e) => onChange(index, e.target.value)} // Pass e.target.value directly
+          onChange={(e) => onChange(index, e.target.value)}
           onKeyDown={(e) => {
-            // Prevent default behavior for arrow keys and spacebar to avoid scrolling
             if (['ArrowRight', 'ArrowLeft', 'ArrowDown', 'ArrowUp', ' ', 'Backspace'].includes(e.key)) {
               e.preventDefault();
             }
-            console.log(`Cell ${index} KeyDown (from Cell.js):`, e.key); // Re-added log
-            onKeyDown(index, e.key); // Pass e.key directly
+            onKeyDown(index, e.key);
           }}
-          // Ref for programmatic focus if needed
+          ref={inputRef}
         />
       )}
     </div>
   );
 }
-export default Cell;
+export default memo(Cell);
