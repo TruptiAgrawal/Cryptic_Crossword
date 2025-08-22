@@ -1,0 +1,117 @@
+The `crossword-react-app` provides a comprehensive user interface for playing and creating crossword puzzles, built with React and styled using a combination of custom CSS (`Crossword.css`) and Chakra UI components. The application features distinct UI states for puzzle selection, active gameplay, and a grid editor.
+
+### General Application Layout and Styling
+
+*   **Overall Container**: The entire application is wrapped in an `.app-container` div, which is centrally aligned on the page. It features a white background, rounded corners, and a subtle box shadow, giving it a modern, clean appearance.
+*   **Body Styling**: The `body` itself is styled with a light background (`#f4f7f9`), centered content, and a sans-serif font stack (`Segoe UI`, `Roboto`, `Helvetica Neue`, Arial). 
+*   **Responsive Design**: The layout adapts to different screen sizes using media queries, adjusting grid cell sizes and switching from a two-column game layout to a single-column layout on smaller screens.
+
+### Main UI Modes
+
+The application dynamically renders one of three main interfaces based on user interaction and state:
+
+1.  **Puzzle Selection Interface**
+2.  **Crossword Game Interface**
+3.  **Crossword Grid Editor Interface**
+
+A "Open Grid Editor" / "Back to Game" button (Chakra UI `Button` with `purple` color scheme) in the top-right corner allows users to switch between the game/selection mode and the editor mode.
+
+---
+
+### 1. Puzzle Selection Interface (`PuzzleSelector.js`)
+
+This is the initial view when the application starts or when the user returns from a game.
+
+*   **Container**: A `level-selection-container` (Chakra `Box`) provides padding and centers the content.
+*   **Heading**: A prominent "Select a Puzzle" (`h1` Chakra `Heading`) is displayed at the top.
+*   **Puzzle List**: Puzzles are presented in a flexible grid (`#puzzle-list` CSS class, Chakra `Flex` with `wrap` and `gap`) allowing them to flow and wrap based on screen size.
+*   **Individual Puzzle Card**: Each puzzle is represented by a clickable card (Chakra `Box`) with:
+    *   Shadow, border, and rounded corners.
+    *   A `Flex` container for the title and difficulty badge.
+    *   **Title**: Displayed as `Text` with a large font size and semi-bold weight.
+    *   **Difficulty Badge**: A Chakra `Badge` indicates the puzzle's difficulty (e.g., "Easy", "Medium") with corresponding color schemes (green for Easy, orange for Medium).
+    *   **Description**: A smaller `Text` element provides a brief description.
+    *   **Interactivity**: Cards have hover effects (larger shadow, slight vertical lift) to indicate they are clickable. Clicking a card loads the selected puzzle.
+*   **Loading/Error Feedback**: A Chakra `Spinner` is shown while puzzles are loading, and an error message is displayed if fetching fails.
+
+---
+
+### 2. Crossword Game Interface (`CrosswordGame.js`, `Grid.js`, `Cell.js`, `Clues.js`, `WinModal.js`)
+
+This is the core gameplay experience, displayed after a puzzle is selected.
+
+*   **Overall Layout**: The game content is contained within a `game-wrapper` (CSS class, column flexbox) which holds the main game area (`#game-container`) and control buttons.
+*   **Main Game Area (`#game-container`)**: This is a two-column CSS grid layout (1fr 1fr) on larger screens, placing the crossword grid on the left and the clues on the right. On smaller screens, it collapses to a single column.
+
+#### 2.1. Crossword Grid (`Grid.js`, `Cell.js`)
+
+*   **Grid Container**: The crossword grid itself is rendered within a `#grid-container` div, which is a CSS grid. Its dimensions are dynamically set via CSS variables (`--grid-size`, `--cell-size`) based on the loaded puzzle data. It has a border and a shadow.
+*   **Individual Cells (`Cell.js`)**: Each cell in the grid is a `div` with the `grid-cell` class.
+    *   **Black Cells**: Cells that are not part of any word have a `black` class, giving them a dark background (`#2d3748`).
+    *   **White Cells**: Playable cells have a white background.
+    *   **Cell Number**: If a cell is the start of an "across" or "down" clue, a small `span` with the `number` class displays the clue number in the top-left corner of the cell.
+    *   **Input Field**: White cells contain an `input` element for single-character entry. This input is styled to be centered, uppercase, and without visible borders or outlines.
+    *   **Active Cell**: The currently selected cell has an `active` class, giving it a darker blue background (`#b3e5fc`) and a distinct blue border (`#0288d1`). The input field within this cell automatically receives focus.
+    *   **Highlighted Cells**: All cells belonging to the currently active clue (the word the user is interacting with) have a `highlighted` class, giving them a light blue background (`#e0f7ff`).
+    *   **Validation Feedback**:
+        *   `correct` class: If a user's entered letter is correct, the input text turns dark green (`#2f855a`).
+        *   `incorrect` class: If a user's entered letter is incorrect, the input text turns dark red (`#c53030`).
+    *   **Interactivity**: Cells handle `onFocus`, `onChange` (for input), and `onKeyDown` events, allowing for letter input and navigation using arrow keys, backspace, and spacebar (to switch between across/down for a cell).
+
+#### 2.2. Clues Section (`Clues.js`)
+
+*   **Container**: The clues are displayed in a `#clues-container` (CSS class, column flexbox) next to the grid. It contains two `Clues` components, one for "Across" and one for "Down".
+*   **Clue List Container**: Each `Clues` component renders a `clue-list-container` (CSS class) with a white background, rounded corners, padding, and a subtle shadow.
+    *   **Heading**: An `h2` displays "Across" or "Down".
+    *   **Scrollable List**: Clues are presented in an unordered list (`ul`) with `max-height` and `overflow-y: auto`, making them scrollable if there are many clues.
+    *   **Individual Clue Item**: Each clue is an `li` element, displaying its number and text (e.g., "1. A large bird or a lifting machine").
+    *   **Active Clue**: The clue corresponding to the currently active word in the grid has an `active` class, giving it a light blue background (`#e0f7ff`), bold text, a distinct color (`#0277bd`), and a prominent left border (`4px solid #0288d1`).
+    *   **Interactivity**: Clue items are clickable (`cursor: pointer`). Clicking a clue will highlight it, and automatically focus the first cell of that word in the crossword grid.
+
+#### 2.3. Game Controls and Timer
+
+*   **Action Buttons**: Below the main game area, there are three Chakra `Button` components:
+    *   "Check Puzzle": Validates all entered answers in the grid.
+    *   "Check Word": Validates only the currently active word.
+    *   "Hint ({hintsUsed})": Provides a hint for the active cell, incrementing a counter.
+*   **Timer**: A `div` displays the elapsed time in `MM:SS` format (e.g., "01:23"), styled with a larger font size and bold weight, positioned to the right of the buttons.
+*   **Timer**: A `div` displays the elapsed time in `MM:SS` format (e.g., "01:23"), styled with a larger font size and bold weight, positioned to the right of the buttons. The timer starts when a puzzle loads and stops when the win modal is shown.
+
+#### 2.4. Win Modal (`WinModal.js`)
+
+*   **Overlay**: When the puzzle is completed, a `win-modal-overlay` (CSS class) appears, covering the entire screen with a semi-transparent black background.
+*   **Modal Content**: A `win-modal-content` (CSS class) box is centered on the screen. It has a white background, generous padding, rounded corners, and a shadow. It also features a `modal-appear` CSS animation for a smooth entrance.
+*   **Message**:
+    *   A large, green "🎉 Congratulations! 🎉" heading (`h2`).
+    *   A congratulatory paragraph: "You've successfully completed the crossword!".
+    *   Displays the `Time: {finalTime}` if available.
+*   **Action Button**: A "Play Again" button allows the user to dismiss the modal and return to the puzzle selection screen.
+
+---
+
+### 3. Crossword Grid Editor Interface (`EditorGrid.js`, `EditorCell.js`)
+
+This interface allows users to design new crossword grids.
+
+*   **Container**: The editor is housed within a `grid-editor-container` (Chakra `Box`).
+*   **Heading**: A centered "Crossword Grid Editor" (`h1` Chakra `Heading`).
+*   **Controls**:
+    *   **Grid Size Input**: A label and a Chakra `Input` field allow the user to set the grid's dimensions (a number input with min/max values of 1 and 20).
+    *   **Export Button**: A "Export Grid JSON" Chakra `Button` (blue) generates a JSON representation of the designed grid.
+*   **Editor Grid**:
+    *   Reuses the `#grid-container` CSS styling for the grid display.
+    *   **Editor Cells (`EditorCell.js`)**: Each cell is a `div` with the `grid-cell` class.
+        *   **Toggle Black/White**: Unlike game cells, these cells do not have numbers or input fields. Instead, clicking a cell toggles its state between white and black, visually changing its background color. The `cursor: pointer` style indicates interactivity.
+*   **Exported JSON Display**:
+    *   A `Heading` "Exported Grid JSON".
+    *   A read-only Chakra `Textarea` displays the generated JSON data, which includes the grid size and the `gridSpec` (an array of objects defining each cell's `x`, `y` coordinates, and whether it's `black`). It explicitly notes that clues need to be added manually after the grid is designed.
+
+---
+
+### Error Boundary (`ErrorBoundary.js`)
+
+*   The entire `App` is wrapped in an `ErrorBoundary` component.
+*   If a React component within the application encounters an unhandled error, the `ErrorBoundary` catches it and displays a fallback UI.
+*   **Fallback UI**: A centered `Box` with a "Oops! Something went wrong." heading, a descriptive text, and a "Refresh Page" button. In development mode, it also displays detailed error information (error message and component stack) for debugging.
+
+In summary, the `crossword-react-app` provides a well-structured, responsive, and interactive user interface for crossword enthusiasts, covering puzzle play, selection, and even grid creation, with clear visual feedback and a consistent design language.
