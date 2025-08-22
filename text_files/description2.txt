@@ -1,0 +1,5 @@
+Create a two-column layout for a crossword puzzle.
+
+In the left column: Display the 5x5 puzzle grid.
+
+In the right column: Place a container that holds all the clues, organized vertically with the "Across" section first, followed by the "Down" section.
